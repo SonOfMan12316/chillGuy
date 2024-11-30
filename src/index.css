@@ -10,10 +10,7 @@
 body {
   font-family: "Poppins", sans-serif;
 }
-/* .currentTime {
-  font-family: "IBM Plex Mono", monospace;
-  font-size: 0.75rem;
-  line-height: 1rem;
-  opacity: 1;
-  color: rgb(63 63 70 / var(1, 1));
-} */
+.currentTime {
+  --tw-text-opacity: 1;
+  color: rgb(63 63 70 / var(--tw-text-opacity, 1));
+}
