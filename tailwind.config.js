@@ -11,7 +11,7 @@ export default {
       iBM: ['IBM Plex Mono', 'monospace']
     },
     colors: {
-      'ch-chill-guy': '#8F9A79',
+      'ch-chill-guy': 'rgb(41, 81, 68)',
     }
   },
   plugins: [],
