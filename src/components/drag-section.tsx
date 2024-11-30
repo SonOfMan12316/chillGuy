@@ -1,9 +1,15 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import chillGuy from "/images/chill-guy.png";
+
+type Position = {
+  top: Number;
+  right: Number;
+}
 
 const DragSection: React.FC = () => {
   const dragableRef = useRef<HTMLImageElement | null>(null);
   const dragzoneRef = useRef<HTMLDivElement | null>(null);
+  const [position, setPosition] = useState<Position>({ top: 140, right: 140 });
 
   useEffect(() => {
     const dragElement = (element: HTMLElement, dragzone: HTMLElement) => {
@@ -15,12 +21,11 @@ const DragSection: React.FC = () => {
       const dragMouseUp = () => {
         document.onmouseup = null;
         document.onmousemove = null;
+        document.ontouchend = null;
         element.classList.remove("drag");
       };
 
       const dragMouseMove = (event: MouseEvent | TouchEvent) => {
-        event.preventDefault();
-
         const clientX =
           "touches" in event ? event.touches[0].clientX : event.clientX;
         const clientY =
@@ -43,7 +48,6 @@ const DragSection: React.FC = () => {
 
       const dragMouseDown = (event: MouseEvent | TouchEvent) => {
         event.preventDefault();
-
         const clientX =
           "touches" in event ? event.touches[0].clientX : event.clientX;
         const clientY =
@@ -55,6 +59,9 @@ const DragSection: React.FC = () => {
 
         document.onmouseup = dragMouseUp;
         document.onmousemove = dragMouseMove;
+        document.addEventListener('touchstart', dragMouseDown, { passive: false });
+        document.ontouchmove = dragMouseMove;
+        document.ontouchend = dragMouseUp;
       };
 
       dragzone.onmousedown = dragMouseDown;
@@ -64,12 +71,13 @@ const DragSection: React.FC = () => {
     if (dragableRef.current && dragzoneRef.current) {
       dragElement(dragableRef.current, dragzoneRef.current);
     }
+    setPosition({top: 140, right: 140 })
   }, []);
 
   return (
     <div
       ref={dragzoneRef}
-      className="overflow-hidden relative p-4 rounded-md bg-ch-chill-guy h-[350px] w-full"
+      className="overflow-hidden relative mt-20 rounded-md bg-ch-chill-guy h-[350px] w-full"
     >
       <div className="">
         <img
@@ -77,6 +85,10 @@ const DragSection: React.FC = () => {
           src={chillGuy}
           alt="Draggable"
           className="cursor-grab absolute h-1/2 w-auto object-contain"
+          style={{
+            top: `${position.top}px`,
+            right: `${position.right}px`
+          }}
         />
       </div>
     </div>
