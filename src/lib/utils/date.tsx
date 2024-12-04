@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
+import Github from "../../components/icon/github";
 
-const useFormattedDayAndTime = (): string => {
+const useFormattedDayAndTime = () => {
   const [formattedDate, setFormattedDate] = useState<string>("");
 
   useEffect(() => {
@@ -30,8 +31,9 @@ const useFormattedDayAndTime = (): string => {
   }, []);
 
   return (
-    <div className="currentTime py-8 px-6 uppercase">
-      {formattedDate}
+    <div className="flex justify-around py-8">
+      <div className="currentTime  uppercase">{formattedDate}</div>
+      <Github />
     </div>
   );
 };
