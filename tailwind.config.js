@@ -5,14 +5,18 @@ export default {
     "./src/**/*.{js,jsx,ts,tsx}",
   ],
   theme: {
-    extend: {},
-    fontFamily: {
-      poppins: ['Poppins', 'ui-sans-serif'],
-      iBM: ['IBM Plex Mono', 'monospace']
+    extend: {
+      colors: {
+        'ch-chill-guy': '#295144',
+        'option-bg': '#e5e7eb',
+        'dark-grey': 'rgb(209 213 219)',
+        'white': '#ffffff'
+      },
+      fontFamily: {
+        poppins: ['Poppins', 'ui-sans-serif'],
+        iBM: ['IBM Plex Mono', 'monospace']
+      },
     },
-    colors: {
-      'ch-chill-guy': 'rgb(41, 81, 68)',
-    }
   },
   plugins: [],
   // mode: 'jit',

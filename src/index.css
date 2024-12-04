@@ -9,8 +9,14 @@
 
 body {
   font-family: "Poppins", sans-serif;
+  background: #f8f8f884;
 }
 .currentTime {
   --tw-text-opacity: 1;
   color: rgb(63 63 70 / var(--tw-text-opacity, 1));
+}
+
+.bg {
+  --tw-bg-opacity: 1;
+  background-color: rgb(243 244 246 / var(--tw-bg-opacity, 1));
 }
