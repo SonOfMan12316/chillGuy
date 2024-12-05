@@ -24,23 +24,22 @@ const DragSection: React.FC<DragSectionProp> = ({
   const [position, setPosition] = useState<Position>({ top: 140, right: 140 });
 
   const backgroundStyle = useMemo(() => {
-    if (file) {
+    if (clickedButton === 2 && file) {
       return {
         backgroundImage: `url(${URL.createObjectURL(file)})`,
         backgroundSize: "cover",
         backgroundPosition: "center",
-        backgroundColor: "",
       };
-    } else if (clickedButton === 2 && primaryBgColor && !file) {
+    } else if (clickedButton === 2 && !file) {
       return { backgroundColor: primaryBgColor };
-    } else if (primaryBgColor && !secondaryBgColor) {
+    } else if (clickedButton === 0 && primaryBgColor) {
       return { backgroundColor: primaryBgColor };
-    } else if (primaryBgColor && secondaryBgColor) {
+    } else if (clickedButton === 1 && primaryBgColor && secondaryBgColor) {
       return {
         backgroundImage: `linear-gradient(to right, ${primaryBgColor}, ${secondaryBgColor})`,
       };
     }
-  }, [primaryBgColor, secondaryBgColor, file]);
+  }, [clickedButton, primaryBgColor, secondaryBgColor, file]);
 
   useEffect(() => {
     const dragElement = (element: HTMLElement, dragzone: HTMLElement) => {
@@ -143,6 +142,7 @@ const DragSection: React.FC<DragSectionProp> = ({
                 right: `${position.right}px`,
               }}
             />
+            <div></div>
           </div>
         </div>
       </div>
