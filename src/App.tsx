@@ -5,9 +5,11 @@ import Option from "./components/option";
 
 const App: React.FC = () => {
   const time = useFormattedDayAndTime();
-  const [primaryBgColor, setPrimaryBgColor] = useState<string>("#281a5b");
+  const [primaryBgColor, setPrimaryBgColor] = useState<string>("#a59bca");
   const [secondaryBgColor, setSecondaryBgColor] = useState<string>("#A25353");
   const [file, setFile] = useState<File | null>(null);
+  const [text, setText] = useState<string>("");
+  const [textColor, setTextColor] = useState<string>("#fff");
   const [clickedButton, setClickedButton] = useState<number | null>(0);
 
   useEffect(() => {
@@ -23,17 +25,20 @@ const App: React.FC = () => {
             primaryBgColor={primaryBgColor}
             secondaryBgColor={secondaryBgColor}
             file={file}
+            text={text}
             clickedButton={clickedButton}
             setPrimaryBgColor={setPrimaryBgColor}
             setSecondaryBgColor={setSecondaryBgColor}
             setFile={setFile}
             setClickedButton={setClickedButton}
+            setText={setText}
           />
           <DragSection
             primaryBgColor={primaryBgColor}
             secondaryBgColor={secondaryBgColor}
             file={file}
             clickedButton={clickedButton}
+            text={text}
           />
         </div>
       </div>

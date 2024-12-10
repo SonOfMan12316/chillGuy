@@ -14,7 +14,8 @@ export default {
       },
       fontFamily: {
         poppins: ['Poppins', 'ui-sans-serif'],
-        iBM: ['IBM Plex Mono', 'monospace']
+        iBM: ['IBM Plex Mono', 'monospace'],
+        impact: ['Impact', 'Charcoal', 'sans-serif']
       },
     },
   },

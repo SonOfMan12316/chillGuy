@@ -5,20 +5,24 @@ interface OptionsProps {
   secondaryBgColor: string;
   clickedButton: number | null;
   file: File | null;
+  text: string;
   setPrimaryBgColor: React.Dispatch<React.SetStateAction<string>>;
   setSecondaryBgColor: React.Dispatch<React.SetStateAction<string>>;
   setFile: React.Dispatch<React.SetStateAction<File | null>>;
   setClickedButton: React.Dispatch<React.SetStateAction<number | null>>;
+  setText: React.Dispatch<React.SetStateAction<string>>;
 }
 
 const Option: React.FC<OptionsProps> = ({
   primaryBgColor,
   secondaryBgColor,
+  text,
   clickedButton,
   setPrimaryBgColor,
   setSecondaryBgColor,
   setFile,
   setClickedButton,
+  setText,
 }) => {
   const styles: string[] = ["solid", "gradient", "image"];
 
@@ -135,6 +139,10 @@ const Option: React.FC<OptionsProps> = ({
           className="border p-2 rounded-lg w-full text-sm focus:outline-none"
           type="text"
           placeholder="Add your text"
+          value={text}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+            setText(e.target.value)
+          }
         ></input>
       </div>
     </div>

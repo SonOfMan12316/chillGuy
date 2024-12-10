@@ -2,14 +2,15 @@ import React, { useEffect, useRef, useState, useMemo } from "react";
 import chillGuy from "/images/chill-guy.png";
 
 type Position = {
-  top: Number;
-  right: Number;
+  top: Number | string;
+  right: Number | string;
 };
 
 interface DragSectionProp {
   primaryBgColor: string;
   secondaryBgColor: string | null;
   file: File | null;
+  text: String;
   clickedButton: number | null;
 }
 
@@ -17,11 +18,17 @@ const DragSection: React.FC<DragSectionProp> = ({
   primaryBgColor,
   secondaryBgColor,
   file,
+  text,
   clickedButton,
 }) => {
-  const dragableRef = useRef<HTMLImageElement | null>(null);
-  const dragzoneRef = useRef<HTMLDivElement | null>(null);
+  const dragzoneRef = useRef<HTMLDivElement>(null);
+  const dragableRef = useRef<HTMLImageElement>(null);
+  const draggableTextRef = useRef<HTMLDivElement>(null);
   const [position, setPosition] = useState<Position>({ top: 140, right: 140 });
+  const [textPosition, setTextPosition] = useState<Position>({
+    top: 200,
+    right: 200,
+  });
 
   const backgroundStyle = useMemo(() => {
     if (clickedButton === 2 && file) {
@@ -40,9 +47,8 @@ const DragSection: React.FC<DragSectionProp> = ({
       };
     }
   }, [clickedButton, primaryBgColor, secondaryBgColor, file]);
-
   useEffect(() => {
-    const dragElement = (element: HTMLElement, dragzone: HTMLElement) => {
+    const dragElement = (elementRef: React.RefObject<HTMLElement>) => {
       let pos1 = 0,
         pos2 = 0,
         pos3 = 0,
@@ -54,7 +60,8 @@ const DragSection: React.FC<DragSectionProp> = ({
         document.ontouchend = null;
         document.ontouchmove = null;
 
-        element.classList.remove("drag");
+        elementRef.current?.classList.remove("drag");
+        elementRef.current?.classList.remove("cursor-grabbing", "drag");
       };
 
       const dragMouseMove = (event: MouseEvent | TouchEvent) => {
@@ -68,14 +75,24 @@ const DragSection: React.FC<DragSectionProp> = ({
         pos3 = clientX;
         pos4 = clientY;
 
-        const maxX = dragzone.offsetWidth - element.offsetWidth;
-        const maxY = dragzone.offsetHeight - element.offsetHeight;
+        const maxX =
+          dragzoneRef.current!.offsetWidth - elementRef.current!.offsetWidth;
+        const maxY =
+          dragzoneRef.current!.offsetHeight - elementRef.current!.offsetHeight;
 
-        const newX = Math.min(Math.max(element.offsetLeft - pos1, 0), maxX);
-        const newY = Math.min(Math.max(element.offsetTop - pos2, 0), maxY);
+        const newX = Math.min(
+          Math.max(elementRef.current!.offsetLeft - pos1, 0),
+          maxX
+        );
+        const newY = Math.min(
+          Math.max(elementRef.current!.offsetTop - pos2, 0),
+          maxY
+        );
 
-        element.style.top = `${newY}px`;
-        element.style.left = `${newX}px`;
+        if (elementRef.current) {
+          elementRef.current.style.top = `${newY}px`;
+          elementRef.current.style.left = `${newX}px`;
+        }
       };
 
       const dragMouseDown = (event: MouseEvent | TouchEvent) => {
@@ -87,7 +104,8 @@ const DragSection: React.FC<DragSectionProp> = ({
 
         pos3 = clientX;
         pos4 = clientY;
-        element.classList.add("drag");
+        elementRef.current?.classList.add("drag");
+        elementRef.current?.classList.add("cursor-grabbing", "drag");
 
         document.onmousemove = dragMouseMove;
         document.onmouseup = dragMouseUp;
@@ -95,30 +113,20 @@ const DragSection: React.FC<DragSectionProp> = ({
         document.ontouchend = dragMouseUp;
       };
 
-      dragzone.onmousedown = (event) => {
-        if (event.target === element) dragMouseDown(event);
-      };
-
-      dragzone.ontouchstart = (event) => {
-        if (event.target === element) dragMouseDown(event);
-      };
+      elementRef.current?.addEventListener("mousedown", dragMouseDown);
+      elementRef.current?.addEventListener("touchstart", dragMouseDown);
     };
 
-    if (dragableRef.current && dragzoneRef.current) {
-      dragElement(dragableRef.current, dragzoneRef.current);
+    if (
+      draggableTextRef.current &&
+      draggableTextRef.current &&
+      dragzoneRef.current
+    ) {
+      dragElement(draggableTextRef);
+      dragElement(dragableRef);
     }
     setPosition({ top: 140, right: 140 });
-
-    return () => {
-      if (dragzoneRef.current) {
-        dragzoneRef.current.onmousedown = null;
-        dragzoneRef.current.ontouchstart = null;
-      }
-      document.onmousemove = null;
-      document.onmouseup = null;
-      document.ontouchmove = null;
-      document.ontouchend = null;
-    };
+    setTextPosition({ top: 50, right: 100 });
   }, []);
 
   return (
@@ -142,7 +150,19 @@ const DragSection: React.FC<DragSectionProp> = ({
                 right: `${position.right}px`,
               }}
             />
-            <div></div>
+            <div
+              className="absolute text-white text-2xl font-impact uppercase cursor-grab select-none whitespace-pre-wrap z-[1000] transform translate-x-0 translate-y-0"
+              ref={draggableTextRef}
+              style={{
+                top: `${textPosition.top}px`,
+                right: `${textPosition.right}px`,
+                WebkitTextStroke: "2px black",
+                textShadow: "2px 2px 0 rgb(0 0 0)",
+                touchAction: "none",
+              }}
+            >
+              {text || ""}
+            </div>
           </div>
         </div>
       </div>
