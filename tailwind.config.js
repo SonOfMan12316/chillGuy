@@ -7,7 +7,7 @@ export default {
   theme: {
     extend: {
       colors: {
-        'ch-chill-guy': '#295144',
+        'primaryColor': '#a59bca',
         'option-bg': '#e5e7eb',
         'dark-grey': 'rgb(209 213 219)',
         'white': '#ffffff'

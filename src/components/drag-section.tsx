@@ -10,8 +10,10 @@ interface DragSectionProp {
   primaryBgColor: string;
   secondaryBgColor: string | null;
   file: File | null;
-  text: String;
+  text: string;
+  textColor: string;
   clickedButton: number | null;
+  textSize: string;
 }
 
 const DragSection: React.FC<DragSectionProp> = ({
@@ -19,6 +21,8 @@ const DragSection: React.FC<DragSectionProp> = ({
   secondaryBgColor,
   file,
   text,
+  textColor,
+  textSize,
   clickedButton,
 }) => {
   const dragzoneRef = useRef<HTMLDivElement>(null);
@@ -47,6 +51,7 @@ const DragSection: React.FC<DragSectionProp> = ({
       };
     }
   }, [clickedButton, primaryBgColor, secondaryBgColor, file]);
+
   useEffect(() => {
     const dragElement = (elementRef: React.RefObject<HTMLElement>) => {
       let pos1 = 0,
@@ -151,14 +156,16 @@ const DragSection: React.FC<DragSectionProp> = ({
               }}
             />
             <div
-              className="absolute text-white text-2xl font-impact uppercase cursor-grab select-none whitespace-pre-wrap z-[1000] transform translate-x-0 translate-y-0"
+              className="absolute font-poppins font-medium cursor-grab select-none whitespace-pre-wrap z-[1000] transform translate-x-0 translate-y-0"
               ref={draggableTextRef}
               style={{
                 top: `${textPosition.top}px`,
                 right: `${textPosition.right}px`,
-                WebkitTextStroke: "2px black",
-                textShadow: "2px 2px 0 rgb(0 0 0)",
+                // WebkitTextStroke: "1px black",
+                textShadow: "2px 2px 0 black",
                 touchAction: "none",
+                color: `${textColor}`,
+                fontSize: `${textSize}px`,
               }}
             >
               {text || ""}

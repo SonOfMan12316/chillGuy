@@ -9,7 +9,8 @@ const App: React.FC = () => {
   const [secondaryBgColor, setSecondaryBgColor] = useState<string>("#A25353");
   const [file, setFile] = useState<File | null>(null);
   const [text, setText] = useState<string>("");
-  const [textColor, setTextColor] = useState<string>("#fff");
+  const [textColor, setTextColor] = useState<string>("#ffffff");
+  const [textSize, setTextSize] = useState<string>("32");
   const [clickedButton, setClickedButton] = useState<number | null>(0);
 
   useEffect(() => {
@@ -26,12 +27,16 @@ const App: React.FC = () => {
             secondaryBgColor={secondaryBgColor}
             file={file}
             text={text}
+            textColor={textColor}
+            textSize={textSize}
             clickedButton={clickedButton}
             setPrimaryBgColor={setPrimaryBgColor}
             setSecondaryBgColor={setSecondaryBgColor}
             setFile={setFile}
+            setTextColor={setTextColor}
             setClickedButton={setClickedButton}
             setText={setText}
+            setTextSize={setTextSize}
           />
           <DragSection
             primaryBgColor={primaryBgColor}
@@ -39,6 +44,8 @@ const App: React.FC = () => {
             file={file}
             clickedButton={clickedButton}
             text={text}
+            textColor={textColor}
+            textSize={textSize}
           />
         </div>
       </div>

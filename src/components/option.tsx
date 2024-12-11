@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 
 interface OptionsProps {
   primaryBgColor: string;
@@ -6,25 +6,34 @@ interface OptionsProps {
   clickedButton: number | null;
   file: File | null;
   text: string;
+  textColor: string;
+  textSize: string;
   setPrimaryBgColor: React.Dispatch<React.SetStateAction<string>>;
   setSecondaryBgColor: React.Dispatch<React.SetStateAction<string>>;
   setFile: React.Dispatch<React.SetStateAction<File | null>>;
   setClickedButton: React.Dispatch<React.SetStateAction<number | null>>;
   setText: React.Dispatch<React.SetStateAction<string>>;
+  setTextColor: React.Dispatch<React.SetStateAction<string>>;
+  setTextSize: React.Dispatch<React.SetStateAction<string>>;
 }
 
 const Option: React.FC<OptionsProps> = ({
   primaryBgColor,
   secondaryBgColor,
   text,
+  textColor,
+  textSize,
   clickedButton,
   setPrimaryBgColor,
   setSecondaryBgColor,
   setFile,
   setClickedButton,
   setText,
+  setTextColor,
+  setTextSize,
 }) => {
   const styles: string[] = ["solid", "gradient", "image"];
+  const sliderRef = useRef<HTMLInputElement>(null);
 
   const handleClick = (index: number) => {
     setClickedButton((prev) => (prev !== index ? index : prev));
@@ -54,6 +63,15 @@ const Option: React.FC<OptionsProps> = ({
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const selectedFile = e.target.files?.[0] || null;
     setFile(selectedFile);
+  };
+
+  const handleTextColorChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    e.preventDefault();
+    setTextColor(e.target.value);
+  };
+
+  const handleTextSizeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setTextSize(e.target.value);
   };
 
   return (
@@ -136,7 +154,7 @@ const Option: React.FC<OptionsProps> = ({
       <div className="px-3">
         <h1 className="text-base mb-2">Text</h1>
         <input
-          className="border p-2 rounded-lg w-full text-sm focus:outline-none"
+          className="border p-2 rounded-lg w-full text-sm focus:outline-none mb-2"
           type="text"
           placeholder="Add your text"
           value={text}
@@ -144,6 +162,30 @@ const Option: React.FC<OptionsProps> = ({
             setText(e.target.value)
           }
         ></input>
+        <h1 className="text-sm mb-2">Text Color</h1>
+        <input
+          className="h-10 w-10 bg-white pointer-events-auto"
+          type="color"
+          onChange={handleTextColorChange}
+          value={textColor}
+        />
+      </div>
+      {text ? (
+        <div className="px-3 my-3 flex flex-col">
+          <span className="text-sm">Font size: {textSize}px</span>
+          <input
+            className="active:cursor-grabbing cursor-grab accent-primaryColor my-2"
+            type="range"
+            value={textSize}
+            onChange={handleTextSizeChange}
+            min={1}
+            max={50}
+          />
+        </div>
+      ) : null}
+      <hr className="border-t my-4"></hr>
+      <div className="px-3">
+        <span className="text-sm">Character Variant</span>
       </div>
     </div>
   );
