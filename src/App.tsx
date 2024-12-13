@@ -12,6 +12,7 @@ const App: React.FC = () => {
   const [textColor, setTextColor] = useState<string>("#ffffff");
   const [textSize, setTextSize] = useState<string>("32");
   const [clickedButton, setClickedButton] = useState<number | null>(0);
+  const [variant, setVariant] = useState<string>("0");
 
   useEffect(() => {
     setClickedButton(0);
@@ -37,6 +38,7 @@ const App: React.FC = () => {
             setClickedButton={setClickedButton}
             setText={setText}
             setTextSize={setTextSize}
+            setVariant={setVariant}
           />
           <DragSection
             primaryBgColor={primaryBgColor}
@@ -46,6 +48,7 @@ const App: React.FC = () => {
             text={text}
             textColor={textColor}
             textSize={textSize}
+            variant={variant}
           />
         </div>
       </div>

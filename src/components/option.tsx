@@ -15,6 +15,7 @@ interface OptionsProps {
   setText: React.Dispatch<React.SetStateAction<string>>;
   setTextColor: React.Dispatch<React.SetStateAction<string>>;
   setTextSize: React.Dispatch<React.SetStateAction<string>>;
+  setVariant: React.Dispatch<React.SetStateAction<string>>;
 }
 
 const Option: React.FC<OptionsProps> = ({
@@ -31,9 +32,10 @@ const Option: React.FC<OptionsProps> = ({
   setText,
   setTextColor,
   setTextSize,
+  setVariant,
 }) => {
   const styles: string[] = ["solid", "gradient", "image"];
-  const sliderRef = useRef<HTMLInputElement>(null);
+  const images = Array.from({ length: 12 }, (_, index) => `${index}`);
 
   const handleClick = (index: number) => {
     setClickedButton((prev) => (prev !== index ? index : prev));
@@ -186,6 +188,20 @@ const Option: React.FC<OptionsProps> = ({
       <hr className="border-t my-4"></hr>
       <div className="px-3">
         <span className="text-sm">Character Variant</span>
+        <div className="grid grid-cols-3 gap-x-2">
+          {images.map((image, index) => (
+            <div
+              key={index}
+              className="border p-1 rounded cursor-pointer hover:bg-gray-50"
+            >
+              <img
+                className="w-96 h-10 object-contain"
+                src={`/images/variants/${image}.png`}
+                onClick={() => setVariant(image)}
+              />
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );

@@ -1,5 +1,4 @@
 import React, { useEffect, useRef, useState, useMemo } from "react";
-import chillGuy from "/images/chill-guy.png";
 
 type Position = {
   top: Number | string;
@@ -14,6 +13,7 @@ interface DragSectionProp {
   textColor: string;
   clickedButton: number | null;
   textSize: string;
+  variant: string;
 }
 
 const DragSection: React.FC<DragSectionProp> = ({
@@ -24,6 +24,7 @@ const DragSection: React.FC<DragSectionProp> = ({
   textColor,
   textSize,
   clickedButton,
+  variant,
 }) => {
   const dragzoneRef = useRef<HTMLDivElement>(null);
   const dragableRef = useRef<HTMLImageElement>(null);
@@ -33,6 +34,15 @@ const DragSection: React.FC<DragSectionProp> = ({
     top: 200,
     right: 200,
   });
+
+  useEffect(() => {
+    if (variant === "9") {
+      setPosition({
+        top: 0,
+        right: 0,
+      });
+    }
+  }, [variant]);
 
   const backgroundStyle = useMemo(() => {
     if (clickedButton === 2 && file) {
@@ -147,7 +157,7 @@ const DragSection: React.FC<DragSectionProp> = ({
           >
             <img
               ref={dragableRef}
-              src={chillGuy}
+              src={`/images/variants/${variant}.png`}
               alt="Draggable"
               className="cursor-grab absolute w-auto h-1/2 object-contain"
               style={{
