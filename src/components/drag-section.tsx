@@ -14,6 +14,7 @@ interface DragSectionProp {
   clickedButton: number | null;
   textSize: string;
   variant: string;
+  dragzoneRef: React.RefObject<HTMLDivElement>;
 }
 
 const DragSection: React.FC<DragSectionProp> = ({
@@ -25,8 +26,8 @@ const DragSection: React.FC<DragSectionProp> = ({
   textSize,
   clickedButton,
   variant,
+  dragzoneRef,
 }) => {
-  const dragzoneRef = useRef<HTMLDivElement>(null);
   const dragableRef = useRef<HTMLImageElement>(null);
   const draggableTextRef = useRef<HTMLDivElement>(null);
   const [position, setPosition] = useState<Position>({ top: 140, right: 140 });
@@ -40,6 +41,11 @@ const DragSection: React.FC<DragSectionProp> = ({
       setPosition({
         top: 0,
         right: 0,
+      });
+    } else {
+      setPosition({
+        top: 140,
+        right: 140,
       });
     }
   }, [variant]);
@@ -90,10 +96,14 @@ const DragSection: React.FC<DragSectionProp> = ({
         pos3 = clientX;
         pos4 = clientY;
 
-        const maxX =
-          dragzoneRef.current!.offsetWidth - elementRef.current!.offsetWidth;
-        const maxY =
-          dragzoneRef.current!.offsetHeight - elementRef.current!.offsetHeight;
+        const dragzoneWidth = dragzoneRef.current!.offsetWidth;
+        const dragzoneHeight = dragzoneRef.current!.offsetHeight;
+
+        const elementWidth = elementRef.current!.offsetWidth;
+        const elementHeight = elementRef.current!.offsetHeight;
+
+        const maxX = dragzoneWidth - elementWidth;
+        const maxY = dragzoneHeight - elementHeight;
 
         const newX = Math.min(
           Math.max(elementRef.current!.offsetLeft - pos1, 0),
@@ -149,6 +159,7 @@ const DragSection: React.FC<DragSectionProp> = ({
       <div className="w-full md:flex md:flex-1 md:ml-6">
         <div className="relative bg-transparent mx-auto h-[350px] w-[350px] lg:h-[600px] lg:w-[600px]">
           <div
+            id="dragzone"
             ref={dragzoneRef}
             style={{
               ...backgroundStyle,
@@ -165,8 +176,8 @@ const DragSection: React.FC<DragSectionProp> = ({
                 right: `${position.right}px`,
               }}
             />
-            <div
-              className="absolute font-poppins font-medium cursor-grab select-none whitespace-pre-wrap z-[1000] transform translate-x-0 translate-y-0"
+            <h1
+              className="draggableTextRef absolute font-franklin font-medium cursor-grab select-none whitespace-pre-wrap text-wrap z-[1000] transform translate-x-0 translate-y-0"
               ref={draggableTextRef}
               style={{
                 top: `${textPosition.top}px`,
@@ -179,7 +190,7 @@ const DragSection: React.FC<DragSectionProp> = ({
               }}
             >
               {text || ""}
-            </div>
+            </h1>
           </div>
         </div>
       </div>

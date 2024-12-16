@@ -15,7 +15,8 @@ export default {
       fontFamily: {
         poppins: ['Poppins', 'ui-sans-serif'],
         iBM: ['IBM Plex Mono', 'monospace'],
-        impact: ['Impact', 'Charcoal', 'sans-serif']
+        impact: ['Impact', 'Charcoal', 'sans-serif'],
+        franklin: ['"Franklin Gothic Heavy"', 'sans-serif']
       },
     },
   },
