@@ -84,7 +84,7 @@ const Option: React.FC<OptionsProps> = ({
         const link = document.createElement("a");
         link.href = dataURL;
         toast.success("Image downloaded");
-        link.download = "your chillGuy meme.png";
+        link.download = "your-chillguy-meme.png";
         link.click();
       } catch (error) {
         toast.error(`Error capturing and downloading content: ${error}`);
