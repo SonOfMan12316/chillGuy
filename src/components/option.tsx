@@ -66,11 +66,6 @@ const Option: React.FC<OptionsProps> = ({
     setSecondaryBgColor(e.target.value);
   };
 
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const selectedFile = e.target.files?.[0] || null;
-    setFile(selectedFile);
-  };
-
   const handleTextColorChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
     setTextColor(e.target.value);
@@ -163,7 +158,11 @@ const Option: React.FC<OptionsProps> = ({
                 accept="image/*"
                 className="hidden"
                 type="file"
-                onChange={handleFileChange}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                  if (e.target.files && e.target?.files[0]) {
+                    setFile(e.target?.files[0]);
+                  }
+                }}
               />
             </>
           ) : (
@@ -230,7 +229,7 @@ const Option: React.FC<OptionsProps> = ({
       <hr className="border-t my-4"></hr>
       <div className="px-3">
         <span className="text-sm">Character Variant</span>
-        <div className="grid grid-cols-3 gap-x-2">
+        <div className="grid grid-cols-3 gap-2">
           {images.map((image, index) => (
             <div
               key={index}

@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import toast, { Toaster } from "react-hot-toast";
+import { Toaster } from "react-hot-toast";
 import useFormattedDayAndTime from "./lib/utils/date";
 import DragSection from "./components/drag-section";
 import Option from "./components/option";
@@ -11,7 +11,7 @@ const App: React.FC = () => {
   const [file, setFile] = useState<File | null>(null);
   const [text, setText] = useState<string>("");
   const [textColor, setTextColor] = useState<string>("#ffffff");
-  const [textSize, setTextSize] = useState<string>("32");
+  const [textSize, setTextSize] = useState<string>("24");
   const [clickedButton, setClickedButton] = useState<number | null>(0);
   const [variant, setVariant] = useState<string>("0");
 

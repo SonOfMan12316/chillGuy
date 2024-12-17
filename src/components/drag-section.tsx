@@ -166,6 +166,9 @@ const DragSection: React.FC<DragSectionProp> = ({
             }}
             className="relative rounded-xl h-full w-full shadow-lg overflow-hidden"
           >
+            <div className="absolute inset-0">
+              <div className="w-full h-full"></div>
+            </div>
             <img
               ref={dragableRef}
               src={`/images/variants/${variant}.png`}
@@ -173,16 +176,16 @@ const DragSection: React.FC<DragSectionProp> = ({
               className="cursor-grab absolute w-auto h-1/2 object-contain"
               style={{
                 top: `${position.top}px`,
-                right: `${position.right}px`,
+                left: `${position.right}px`,
               }}
             />
-            <h1
-              className="draggableTextRef absolute font-franklin font-medium cursor-grab select-none whitespace-pre-wrap text-wrap z-[1000] transform translate-x-0 translate-y-0"
+            <div
+              className="draggableTextRef absolute uppercase font-franklin font-medium cursor-grab select-none whitespace-pre-wrap text-wrap z-[1000] transform translate-x-0 translate-y-0 px-4"
               ref={draggableTextRef}
               style={{
                 top: `${textPosition.top}px`,
-                right: `${textPosition.right}px`,
-                // WebkitTextStroke: "1px black",
+                left: `${textPosition.right}px`,
+                WebkitTextStroke: "1px black",
                 textShadow: "2px 2px 0 black",
                 touchAction: "none",
                 color: `${textColor}`,
@@ -190,7 +193,7 @@ const DragSection: React.FC<DragSectionProp> = ({
               }}
             >
               {text || ""}
-            </h1>
+            </div>
           </div>
         </div>
       </div>
